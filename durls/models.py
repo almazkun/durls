@@ -1,11 +1,12 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.utils.text import slugify
 
 # Create your models here.
 class Destination(models.Model):
-    slug = models.SlugField(_("Path for short URL"), unique=True)
-    destination_url = models.URLField(_("Destination URL"), max_length=200)
+    slug = models.SlugField(_("Path for short URL"), unique=True, allow_unicode=True, max_length=255)
+    destination_url = models.URLField(_("Destination URL"), max_length=255)
     visits = models.IntegerField(_("Number of visits"), default=0)
 
     created_on = models.DateTimeField(_("Created on"), auto_now_add=True)
@@ -16,7 +17,12 @@ class Destination(models.Model):
         verbose_name_plural = _("Destinations")
 
     def __str__(self):
-        return self.name
+        return self.slug
+    
+    def add_visit(self, number=1):
+        self.visits += number
+        self.save()
 
-    def get_absolute_url(self):
-        return reverse("Destination_detail", kwargs={"pk": self.pk})
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.slug, allow_unicode=True)
+        super().save(*args, **kwargs)
