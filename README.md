@@ -1,2 +1,2 @@
 # durls
-Django URL Shortner
+Django URL shortener

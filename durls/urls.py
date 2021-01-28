@@ -1,6 +1,7 @@
 from django.urls import path, include
-from durls.views import DestinationListView
+from durls.views import DestinationCreateView, redirector
 
 urlpatterns = [
-    path("", DestinationListView.as_view(), name="destination_list"),
+    path("_/", DestinationCreateView.as_view(), name="destination_list"),
+    path("<slug>/", redirector, name="redirector"),
 ]

@@ -15,6 +15,7 @@ class Destination(models.Model):
     class Meta:
         verbose_name = _("Destination")
         verbose_name_plural = _("Destinations")
+        ordering = ["-created_on"]
 
     def __str__(self):
         return self.slug
