@@ -24,5 +24,3 @@ def redirector(request, slug):
     destination = get_object_or_404(Destination, slug=slug)
     destination.add_visit()
     return redirect(destination.destination_url)
-
-

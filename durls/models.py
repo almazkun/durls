@@ -5,7 +5,9 @@ from django.utils.text import slugify
 
 # Create your models here.
 class Destination(models.Model):
-    slug = models.SlugField(_("Path for short URL"), unique=True, allow_unicode=True, max_length=255)
+    slug = models.SlugField(
+        _("Path for short URL"), unique=True, allow_unicode=True, max_length=255
+    )
     destination_url = models.URLField(_("Destination URL"), max_length=255)
     visits = models.IntegerField(_("Number of visits"), default=0)
 
@@ -19,7 +21,7 @@ class Destination(models.Model):
 
     def __str__(self):
         return self.slug
-    
+
     def add_visit(self, number=1):
         self.visits += number
         self.save()

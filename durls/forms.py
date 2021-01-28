@@ -7,4 +7,3 @@ class DestinationForm(ModelForm):
     class Meta:
         model = Destination
         fields = ("slug", "destination_url")
-        
