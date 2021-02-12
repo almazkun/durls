@@ -26,8 +26,8 @@
                         </form>
                         {% for destination in destinations %}
                             <tr>
-                                <th scope="row">{{destination.slug}}</th>
-                                <td>{{destination.destination_url}}</td>
+                                <th scope="row"><a href="/{{ destination.slug }}">{{ destination.slug }}</a></th>
+                                <td><a href="/{{ destination.slug }}">{{destination.destination_url}}</a></td>
                                 <td>{{destination.visits}}</td>
                                 <td>Delete</td>
                             </tr>

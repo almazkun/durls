@@ -19,8 +19,6 @@ class DestinationCreateView(CreateView):
 
 
 def redirector(request, slug):
-    if slug == "":
-        redirect("https://akun.dev")
     destination = get_object_or_404(Destination, slug=slug)
     destination.add_visit()
     return redirect(destination.destination_url)
