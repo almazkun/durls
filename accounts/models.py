@@ -44,6 +44,9 @@ class UserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
     username = None
     email = models.EmailField(
         _("email address"),
@@ -52,8 +55,7 @@ class CustomUser(AbstractUser):
         help_text="Should be valid email address",
     )
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    objects = UserManager()
 
     def __str__(self):
         return self.email

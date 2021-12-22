@@ -7,3 +7,7 @@ run_d:
 
 stop:
 	docker stop $(shell docker ps -aq)
+
+test:
+	coverage run manage.py test
+	coverage report -m
