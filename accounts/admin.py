@@ -7,12 +7,12 @@ from accounts.models import CustomUser
 
 
 class CustomUserAdmin(UserAdmin):
+    ordering = ("email",)
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
     list_display = [
         "email",
-        "username",
     ]
 
 
