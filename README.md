@@ -9,7 +9,7 @@ cd durls
 pipenv install
 pipenv shell
 python3 manage.py runserver
-# Open your browser and navigate to `127.0.0.1:80`
+# Open your browser and navigate to `127.0.0.1:8000` or `localhost`
 ```
 
 2. To use docker:
@@ -18,7 +18,7 @@ git clone https://github.com/almazkun/durls.git
 cd durls
 docker build -t durls .
 docker run -p 80:80 durls
-# Open your browser and navigate to `127.0.0.1:80`
+# Open your browser and navigate to `127.0.0.1` or `localhost`
 ```
 
 3. To add a new redirect destination:
