@@ -12,11 +12,11 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip3 install --upgrade pip
 
-run pip3 install pipenv
+RUN pip3 install pipenv
 
 COPY Pipfile ./
 
-run pipenv lock
+RUN pipenv lock
 
 RUN pipenv install --system
 
