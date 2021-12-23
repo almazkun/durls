@@ -20,12 +20,33 @@ class TestViews(TestCase):
     def test_manage_view(self):
         response = self.client.get(reverse("manage"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "destination_list.html")
+        self.assertTemplateUsed(response, "durls/destination_list.html")
+
+    def test_add_delete_view(self):
+        self.client.post(reverse("create"), self.dest_data)
+        dest = Destination.objects.get(slug=self.dest_data["slug"])
+
+        self.assertEqual(dest.slug, self.dest_data["slug"])
+        self.assertEqual(dest.destination_url, self.dest_data["destination_url"])
+        self.assertEqual(dest.visits, 0)
+
+        self.client.post(reverse("delete", args=[self.dest_data["slug"]]))
+        with self.assertRaises(Destination.DoesNotExist):
+            Destination.objects.get(slug=self.dest_data["slug"])
 
     def test_redirect_view(self):
-        dest = Destination(**self.dest_data)
-        dest.save()
-        response = self.client.get(self.dest_data["slug"])
+        self.client.post(reverse("create"), self.dest_data)
+        response = self.client.get(reverse("redirect", args=[self.dest_data["slug"]]))
+        dest = Destination.objects.get(slug=self.dest_data["slug"])
 
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response.url, self.dest_data["destination_url"])
+        self.assertEqual(dest.visits, 1)
+        self.assertEqual(f"{dest}", self.dest_data["slug"])
+
+    def test_get_not_allowed(self):
+        response = self.client.get(reverse("create"))
+        self.assertEqual(response.status_code, 301)
+        response = self.client.get(reverse("delete", args=[self.dest_data["slug"]]))
+        self.assertEqual(response.status_code, 301)
+
