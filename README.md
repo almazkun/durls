@@ -17,7 +17,7 @@ python3 manage.py runserver
 git clone https://github.com/almazkun/durls.git
 cd durls
 docker build -t durls .
-docker run -p 80:80 durls
+docker run --rm -d -p 80:8000 durls
 # Open your browser and navigate to `127.0.0.1` or `localhost`
 ```
 
