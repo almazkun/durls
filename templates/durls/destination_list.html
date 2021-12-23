@@ -1,30 +1,27 @@
 {% extends "_base.html" %}
 
 {% block main_content %}
-{% include "includes/about.html" %}
+    <div class="container pb-5 mb-5">
+        <form action="{% url 'create' %}" method="post">{% csrf_token %}
+            {{ request.META.HTTP_HOST }}/<input type="text" name="slug" placeholder="Short path for" tutle="Short path">
+            <input type="text" name="destination_url" placeholder="Your long url here" title="Full URL">
+            <input type="submit" value="Shorten">
+        </form>
 
-<form action="{% url 'create' %}" method="post">{% csrf_token %}
-    {{ request.META.HTTP_HOST }}/<input type="text" name="slug" placeholder="Short path for" tutle="Short path">
-    <input type="text" name="destination_url" placeholder="Your long url here" title="Full URL">
-    <input type="submit" value="Shorten">
-</form>
-
-{% if destinations %}
-<div>
-    <h2>Available Routes</h2>
-    <ul>
-        {% for destination in destinations %}
-            <li>
-                <a href="/{{ destination.slug }}" target="_blank">{{ request.META.HTTP_HOST }}/{{ destination.slug }}</a>
-                <form action="{% url 'delete' destination.slug %}" method="post">{% csrf_token %}
-                    <input type="submit" type="submit" value="DELETE">
-                </form>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
-
-
-
+        {% if destinations %}
+            <div>
+                <h2>Available Routes</h2>
+                <ul>
+                    {% for destination in destinations %}
+                        <li>
+                            <a href="/{{ destination.slug }}" target="_blank">{{ request.scheme }}://{{ request.META.HTTP_HOST }}/{{ destination.slug }}</a>
+                            <form action="{% url 'delete' destination.slug %}" method="post">{% csrf_token %}
+                                <input class="btn btn-danger" type="submit" type="submit" value="D">
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

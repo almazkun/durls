@@ -1,8 +1,7 @@
 {% extends "_base.html" %}
 
 {% block main_content %}
-{% include "includes/about.html" %}
-<p>
-    Here you can create your own url to shorten: <a href="{%url 'manage' %}">Create</a>
-</p>
+    <div class="container pb-5 mb-5">
+        <p>Here you can create your own url to shorten: <a href="{%url 'manage' %}">Create</a></p>
+    </div>
 {% endblock %}

@@ -49,4 +49,3 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 301)
         response = self.client.get(reverse("delete", args=[self.dest_data["slug"]]))
         self.assertEqual(response.status_code, 301)
-
