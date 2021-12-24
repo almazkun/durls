@@ -12,8 +12,10 @@ RUN pip3 install --upgrade pip
 
 RUN pip3 install pipenv
 
-COPY . .
+COPY ./Pipfile .
+
+COPY ./Pipfile.lock .
 
 RUN pipenv install --deploy --system --ignore-pipfile
 
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+COPY . .

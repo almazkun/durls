@@ -44,10 +44,10 @@
                                             {{ destination.slug }}
                                         </a>
                                     </th>
-                                    <td>
+                                    <td class="overflow-auto">
                                         <a href="{{ destination.destination_url }}" target="_blank"
                                             title="{{ destination.destination_url }}">
-                                            {{ destination.destination_url }}
+                                            <code>{{ destination.destination_url }}</code>
                                         </a>
                                     </td>
                                     <td>{{ destination.visits }}</td>

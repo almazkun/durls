@@ -2,11 +2,10 @@ run:
 	pipenv run python3 manage.py runserver
 
 run_d: 
-	docker build -t durls .
-	docker run --rm -d -p 80:8000 durls
+	docker-compose up -d --build
 
 stop:
-	docker stop $(shell docker ps -aq)
+	docker-compose down -v
 
 test:
 	coverage run manage.py test
