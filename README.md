@@ -16,8 +16,7 @@ python3 manage.py runserver
 ```bash
 git clone https://github.com/almazkun/durls.git
 cd durls
-docker build -t durls .
-docker run --rm -d -p 80:8000 durls
+docker-compose up
 # Open your browser and navigate to `127.0.0.1` or `localhost`
 ```
 
@@ -28,15 +27,7 @@ docker run --rm -d -p 80:8000 durls
 
 ### TODO
 
-- Homepage on empty slug
-- Slug checker, to remove "/"
-- Mount volume for code change
-- Production setup
-
-## Deploy
-
-1. https://testdriven.io/blog/deploying-django-to-digitalocean-with-docker-and-github-actions/
-
-2. https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
-
-3. https://testdriven.io/blog/django-lets-encrypt/
+- .env to settings (allowed hosts, secret key, etc.)
+- Script to migrate and populate initial data to DB
+- Add DNS records
+- Job to reset the DB
