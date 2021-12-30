@@ -8,8 +8,8 @@ stop:
 	docker-compose down -v
 
 test:
-	coverage run manage.py test
-	coverage report -m
+	pipenv run coverage run manage.py test
+	pipenv run coverage report -m
 
 prod:
 	docker-compose -f docker-compose.prod.yml up -d --build 
