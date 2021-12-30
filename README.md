@@ -22,7 +22,7 @@ docker-compose up
 
 3. To add a new redirect destination:
     - start the server
-    - Open your browser and navigate to `127.0.0.1:80/_/`
+    - Open your browser and navigate to `127.0.0.1:80/`
     - add a new slug and destination URL
 
 ### TODO
