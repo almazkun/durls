@@ -20,15 +20,18 @@ env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
 )
-environ.Env.read_env(BASE_DIR / '.env')
+environ.Env.read_env(BASE_DIR / ".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY', default='django-insecure-*pi7khx4@@@!%vghpgr5x86_@67tugh%o+1^dbnpc4+xx4z0a4')
+SECRET_KEY = env(
+    "SECRET_KEY",
+    default="django-insecure-*pi7khx4@@@!%vghpgr5x86_@67tugh%o+1^dbnpc4+xx4z0a4",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', default=False)
+DEBUG = env("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
 
