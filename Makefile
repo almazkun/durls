@@ -16,3 +16,4 @@ prod:
 
 migrate:
 	docker-compose exec web python manage.py migrate
+	exit 0
