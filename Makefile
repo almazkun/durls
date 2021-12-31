@@ -13,3 +13,6 @@ test:
 
 prod:
 	docker-compose -f docker-compose.prod.yml up -d --build 
+
+migrate:
+	docker-compose exec web python manage.py migrate

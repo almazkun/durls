@@ -4,8 +4,8 @@
 ## Demo at:
 https://durls.akun.dev/
 
-## Start Server
-1. Using pipenv:
+## Usage
+1. Start the server using pipenv:
 ```bash
 git clone https://github.com/almazkun/durls.git
 cd durls
@@ -14,15 +14,17 @@ pipenv shell
 python3 manage.py migrate
 python3 manage.py createsuperuser
 python3 manage.py runserver 127.0.0.1:80
+
 # Open your browser and navigate to `127.0.0.1` or `localhost`
 ```
 
-2. To use docker:
+2. Start the server with docker:
 ```bash
 git clone https://github.com/almazkun/durls.git
 cd durls
-docker-compose up
+docker-compose up -d --build
 docker-compose exec web python3 manage.py migrate
+docker-compose exec web python3 manage.py createsuperuser
 
 # Open your browser and navigate to `127.0.0.1` or `localhost`
 ```
@@ -35,3 +37,5 @@ docker-compose exec web python3 manage.py migrate
 ### TODO
 - Script to migrate and populate initial data to DB
 - Job to reset the DB
+- Social login
+- Manage Authentication
