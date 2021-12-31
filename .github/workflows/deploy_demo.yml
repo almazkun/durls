@@ -26,4 +26,4 @@ jobs:
           git fetch origin demo
           git reset --hard origin/demo
           make prod
-          make migrate
+          docker-compose exec web python manage.py migrate
