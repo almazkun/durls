@@ -4,17 +4,26 @@ on:
   push:
     branches: [ demo ]
 
-  - name: executing remote ssh commands using ssh key
-    uses: appleboy/ssh-action@master
-    with:
-      host: ${{ secrets.HOST }}
-      username: ${{ secrets.USERNAME }}
-      key: ${{ secrets.KEY }}
-      port: ${{ secrets.PORT }}
-      script: |
-        cd ${{ secrets.DIRECTORY }}
-        git checkout demo
-        git fetch origin demo
-        git reset --hard origin/demo
-        make prod
-        make migrate
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v1
+
+    - name: Deploy to Demo server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd ${{ secrets.DIRECTORY }}
+          git checkout demo
+          git fetch origin demo
+          git reset --hard origin/demo
+          make prod
+          make migrate
