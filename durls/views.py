@@ -5,30 +5,26 @@ from django.http import HttpResponsePermanentRedirect
 from django.urls import reverse_lazy
 
 
-class NoGetMixin:
-    def get(self, request, *args, **kwargs):
-        return HttpResponsePermanentRedirect(self.success_url)
-
-
 class HomeView(TemplateView):
     template_name = "durls/home.html"
 
 
-class DestinationListView(ListView):
+class DestinationCreateView(CreateView):
     model = Destination
-    template_name = "destination_list.html"
-    context_object_name = "destinations"
-
-
-class DestinationCreateView(NoGetMixin, CreateView):
-    model = Destination
-    success_url = reverse_lazy("manage")
+    success_url = reverse_lazy("create")
+    template_name = "durls/destination_list.html"
     fields = ["slug", "destination_url"]
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["destinations"] = self.model.objects.all()
+        return context
 
-class DestinationDeleteView(NoGetMixin, DeleteView):
+
+class DestinationDeleteView(DeleteView):
     model = Destination
-    success_url = reverse_lazy("manage")
+    success_url = reverse_lazy("create")
+    template_name = "durls/destination_delete.html"
 
 
 def redirect_view(request, slug):

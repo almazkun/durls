@@ -1,0 +1,12 @@
+{% extends "_base.html" %}
+
+{% block main_content %}
+    <div class="container">
+        <h2>Delete Short URL</h2>
+        <p>Are you realy sure you want to delete <code>{{ object.slug }}</code> short url?</p>
+        <form class="d-flex justify-content-between">{% csrf_token %}
+            <a class="btn btn-outline-success" href="{% url 'create' %}">Cancel</a>
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+    </div>
+{% endblock %}

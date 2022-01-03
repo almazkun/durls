@@ -18,7 +18,7 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, "durls/home.html")
 
     def test_manage_view(self):
-        response = self.client.get(reverse("manage"))
+        response = self.client.get(reverse("create"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "durls/destination_list.html")
 
@@ -43,9 +43,3 @@ class TestViews(TestCase):
         self.assertEqual(response.url, self.dest_data["destination_url"])
         self.assertEqual(dest.visits, 1)
         self.assertEqual(f"{dest}", self.dest_data["slug"])
-
-    def test_get_not_allowed(self):
-        response = self.client.get(reverse("create"))
-        self.assertEqual(response.status_code, 301)
-        response = self.client.get(reverse("delete", args=[self.dest_data["slug"]]))
-        self.assertEqual(response.status_code, 301)

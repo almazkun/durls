@@ -2,27 +2,9 @@
 
 {% block main_content %}
     <div class="container">
-        <div class="pb-5">
-            <h2>Create New</h2>
-            <div class="border rounded p-2 p-md-3 bg-light">
-                <form action="{% url 'create' %}" method="post">{% csrf_token %}
-                    <label for="slugInput" class="form-label">Short URL</label>
-                    <div class="input-group mb-2 mb-md-3">
-                        <span class="input-group-text" id="basic-addon3">
-                            {{ request.scheme }}://{{ request.META.HTTP_HOST}}/</span>
-                        <input id="slugInput" class="form-control" type="text" name="slug" placeholder="path"
-                            title="Path for Short URL" aria-describedby="basic-addon3">
-                    </div>
 
-                    <label for="destinationUrlInput" class="form-label">For</label>
-                    <div class="input-group  mb-2 mb-md-3">
-                        <textarea class="form-control" type="text" id="destinationUrlInput" name="destination_url"
-                            placeholder="Long destination URL" title="Full URL" aria-label="Full URL"></textarea>
-                    </div>
-                    <input class="btn btn-success" type="submit" value="Shorten">
-                </form>
-            </div>
-        </div>
+        {% include "includes/form.html" %}
+
         <div class="pb-5">
             <h2>Existing URLs</h2>
             <div class="table-responsive mb-5 border rounded p-2 p-md-3 ">
@@ -50,8 +32,8 @@
                                             <code>{{ destination.destination_url }}</code>
                                         </a>
                                     </td>
-                                    <td>{{ destination.visits }}</td>
-                                    <td>
+                                    <td class="text-center"><code>{{ destination.visits }}</code></td>
+                                    <td class="text-center">
                                         <form action="{% url 'delete' destination.slug %}" method="post">{% csrf_token %}
                                             <button class="btn btn-sm btn-danger" title="Delete this URL">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">

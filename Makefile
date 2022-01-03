@@ -1,11 +1,8 @@
 run:
-	pipenv run python3 manage.py runserver
+	sudo pipenv run python3 manage.py runserver 127.0.0.1:80
 
 run_d: 
 	docker-compose up --build
-
-stop:
-	docker-compose down -v
 
 test:
 	pipenv run coverage run manage.py test
@@ -15,5 +12,8 @@ prod:
 	docker-compose -f docker-compose.prod.yml up -d --build 
 
 migrate:
-	docker-compose exec web python manage.py migrate
+	docker-compose exec -ti web python manage.py migrate
 	exit 0
+
+down:
+	docker-compose down -v
