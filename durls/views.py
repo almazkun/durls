@@ -1,15 +1,16 @@
-from django.views.generic import TemplateView, ListView, CreateView, DeleteView
+from django.views.generic import TemplateView, CreateView, DeleteView
 from durls.models import Destination
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponsePermanentRedirect, Http404
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class HomeView(TemplateView):
     template_name = "durls/home.html"
 
 
-class DestinationCreateView(CreateView):
+class DestinationCreateView(LoginRequiredMixin, CreateView):
     model = Destination
     success_url = reverse_lazy("create")
     template_name = "durls/destination_list.html"
@@ -21,14 +22,14 @@ class DestinationCreateView(CreateView):
         return context
 
 
-class DestinationDeleteView(DeleteView):
+class DestinationDeleteView(LoginRequiredMixin, DeleteView):
     model = Destination
     success_url = reverse_lazy("create")
     template_name = "durls/destination_delete.html"
 
     def get_object(self, queryset=None):
         """Hook to ensure object is owned by request.user."""
-        obj = super(MyDeleteView, self).get_object()
+        obj = super().get_object()
         if not obj.owner == self.request.user:
             raise Http404
         return obj
