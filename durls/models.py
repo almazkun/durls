@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext as _
 from django.utils.text import slugify
-
+from accounts.models import CustomUser
 
 # Create your models here.
 class Destination(models.Model):
@@ -10,6 +10,7 @@ class Destination(models.Model):
     )
     destination_url = models.TextField(_("Destination URL"))
     visits = models.IntegerField(_("Number of visits"), default=0)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     created_on = models.DateTimeField(_("Created on"), auto_now_add=True)
     updated_on = models.DateTimeField(_("Updated on"), auto_now=True)

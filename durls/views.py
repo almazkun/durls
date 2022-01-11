@@ -26,6 +26,13 @@ class DestinationDeleteView(DeleteView):
     success_url = reverse_lazy("create")
     template_name = "durls/destination_delete.html"
 
+    def get_object(self, queryset=None):
+        """Hook to ensure object is owned by request.user."""
+        obj = super(MyDeleteView, self).get_object()
+        if not obj.owner == self.request.user:
+            raise Http404
+        return obj
+
 
 def redirect_view(request, slug):
     destination = get_object_or_404(Destination, slug=slug)

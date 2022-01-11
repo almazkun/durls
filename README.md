@@ -35,6 +35,7 @@ docker-compose exec web python3 manage.py createsuperuser
     - add a new slug and destination URL
 
 ### TODO
+- Permission for creator 
 - Script to migrate and populate initial data to DB
 - Job to reset the DB
 - Social login
