@@ -9,6 +9,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class HomeView(TemplateView):
     template_name = "durls/home.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["destinations"] = Destination.objects.all()
+        return context
+
 
 class DestinationCreateView(LoginRequiredMixin, CreateView):
     model = Destination
