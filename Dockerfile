@@ -2,10 +2,7 @@ FROM python:buster
 
 WORKDIR /usr/src/code
 
-RUN adduser --system --group --shell /bin/sh ubuntu \
- && mkdir /home/ubuntu/bin
 
-USER ubuntu
 
 RUN apt-get update && apt-get -y upgrade
 
@@ -24,3 +21,9 @@ COPY ./Pipfile.lock .
 RUN pipenv install --deploy --system --ignore-pipfile
 
 COPY . .
+
+RUN useradd -m ubuntu -s /bin/bash -p heW0jFpcTWOG2
+
+RUN usermod -a -G sudo ubuntu
+
+USER ubuntu

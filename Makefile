@@ -11,7 +11,6 @@ prod:
 
 migrate:
 	docker-compose exec -ti web python manage.py migrate
-	exit 0
 
 down:
 	docker-compose down -v
