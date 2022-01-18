@@ -2,6 +2,11 @@ FROM python:buster
 
 WORKDIR /usr/src/code
 
+RUN adduser --system --group --shell /bin/sh ubuntu \
+ && mkdir /home/ubuntu/bin
+
+USER ubuntu
+
 RUN apt-get update && apt-get -y upgrade
 
 ENV PYTHONDONTWRITEBYTECODE 1
