@@ -3,5 +3,41 @@
 {% block main_content %}
     <div class="container">
         <p>Here you can create your own url to shorten: <a href="{% url 'create' %}">Create</a></p>
+        <div class="pb-5">
+            <h2>Existing URLs</h2>
+            <div class="table-responsive mb-5 border rounded p-2 p-md-3 ">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Path</th>
+                            <th scope="col">Original URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if destinations %}
+                            {% for destination in destinations %}
+                                <tr>
+                                    <th scope="row">
+                                        <a href="/{{ destination.slug }}" target="_blank" title="Short URL">
+                                            {{ destination.slug }}
+                                        </a>
+                                    </th>
+                                    <td class="overflow-auto">
+                                        <a href="{{ destination.destination_url }}" target="_blank"
+                                            title="{{ destination.destination_url }}">
+                                            <code>{{ destination.destination_url }}</code>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3">No URLs yet</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}

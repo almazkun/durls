@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from durls.models import Destination
-
+from accounts.models import CustomUser
 
 # Create your tests here.
 class TestViews(TestCase):
@@ -11,6 +11,15 @@ class TestViews(TestCase):
             "slug": "go",
             "destination_url": "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=bilgogi",
         }
+        self.user_signup_data = {
+            "email": "some@email.com",
+            "password1": "some_password",
+            "password2": "some_password",
+        }
+        self.user_login_data = {
+            "email": self.user_signup_data["email"],
+            "password": self.user_signup_data["password1"],
+        }
 
     def test_home_view(self):
         response = self.client.get(reverse("home"))
@@ -18,24 +27,63 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, "durls/home.html")
 
     def test_manage_view(self):
-        response = self.client.get(reverse("create"))
+        c = self.client
+        response = c.get(reverse("create"))
+
+        self.assertEqual(response.status_code, 302)
+
+        c.post(reverse("signup"), self.user_signup_data)
+        c.login(
+            email=self.user_login_data["email"],
+            password=self.user_login_data["password"],
+        )
+        response = c.get(reverse("create"))
+
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "durls/destination_list.html")
 
     def test_add_delete_view(self):
-        self.client.post(reverse("create"), self.dest_data)
+        c = self.client
+        c.post(reverse("signup"), self.user_signup_data)
+        c.login(
+            email=self.user_login_data["email"],
+            password=self.user_login_data["password"],
+        )
+        c.post(reverse("create"), self.dest_data)
         dest = Destination.objects.get(slug=self.dest_data["slug"])
 
         self.assertEqual(dest.slug, self.dest_data["slug"])
         self.assertEqual(dest.destination_url, self.dest_data["destination_url"])
         self.assertEqual(dest.visits, 0)
 
+        c1 = self.client
+        another_user_data = self.user_signup_data.copy()
+        another_user_data.update({"email": "another@email.com"})
+        c1.post(reverse("signup"), another_user_data)
+        c1.login(
+            email=another_user_data["email"], password=another_user_data["password1"]
+        )
+
+        response = self.client.post(reverse("delete", args=[self.dest_data["slug"]]))
+        self.assertEqual(response.status_code, 404)
+
+        c.login(
+            email=self.user_login_data["email"],
+            password=self.user_login_data["password"],
+        )
         self.client.post(reverse("delete", args=[self.dest_data["slug"]]))
         with self.assertRaises(Destination.DoesNotExist):
             Destination.objects.get(slug=self.dest_data["slug"])
 
     def test_redirect_view(self):
-        self.client.post(reverse("create"), self.dest_data)
+        c = self.client
+        c.post(reverse("signup"), self.user_signup_data)
+        c.login(
+            email=self.user_login_data["email"],
+            password=self.user_login_data["password"],
+        )
+        c.post(reverse("create"), self.dest_data)
+
         response = self.client.get(reverse("redirect", args=[self.dest_data["slug"]]))
         dest = Destination.objects.get(slug=self.dest_data["slug"])
 

@@ -26,6 +26,11 @@ class DestinationCreateView(LoginRequiredMixin, CreateView):
         context["destinations"] = self.model.objects.all()
         return context
 
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.owner = self.request.user
+        return super().form_valid(form)
+
 
 class DestinationDeleteView(LoginRequiredMixin, DeleteView):
     model = Destination

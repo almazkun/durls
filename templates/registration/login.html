@@ -1,11 +1,17 @@
 {% extends "_base.html" %}
 
 {% block main_content %}
-    <div class="container">
-        <h2>Login please</h2>
-        <form>{% csrf_token %}
-            {% include 'includes/form.html' with form=form  %}
-            <button type="submit" class="btn btn-primary  mt-2 mt-md-3">Login</button>
-        </form>
+    <div class="container pb-5">
+        <div class="pb-5 mb-5">
+            <h2>Login please</h2>
+            <form id="login-form" method="post">{% csrf_token %}
+                {% include 'includes/form.html' with form=form  %}
+                <div class="mt-2 mt-md-3 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+
+            New to Durls? <a href="{% url 'signup' %}">Create an account.</a>
+        </div>
     </div>
 {% endblock %}

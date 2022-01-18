@@ -52,7 +52,7 @@ class CustomUser(AbstractUser):
         _("email address"),
         unique=True,
         error_messages={"unique": "A user with that email already exists."},
-        help_text="Should be valid email address",
+        help_text="Should be a valid email address",
     )
 
     objects = UserManager()
