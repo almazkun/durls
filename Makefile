@@ -14,3 +14,8 @@ migrate:
 
 down:
 	docker-compose down -v
+
+demo:
+	git checkout demo
+	git pull origin main
+	git push
