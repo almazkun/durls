@@ -3,7 +3,38 @@
 {% block main_content %}
     <div class="container">
 
-        {% include "includes/form.html" %}
+        {% if form %}
+            <div class="pb-5">
+                <h2>Create New</h2>
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %} 
+                            <div class="alert alert-danger">
+                                    {{ error|escape }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                <div class="border rounded p-2 p-md-3 bg-light">
+                    <form method="post">{% csrf_token %}
+                        <label for="slugInput" class="form-label">Short URL</label>
+                        <div class="input-group mb-2 mb-md-3">
+                            <span class="input-group-text" id="basic-addon3">
+                                {{ request.scheme }}://{{ request.META.HTTP_HOST}}/</span>
+                            <input id="slugInput" class="form-control" type="text" name="slug" placeholder="path"
+                                title="Path for Short URL" aria-describedby="basic-addon3">
+                        </div>
+
+                        <label for="destinationUrlInput" class="form-label">For</label>
+                        <div class="input-group  mb-2 mb-md-3">
+                            <textarea class="form-control" type="text" id="destinationUrlInput" name="destination_url"
+                                placeholder="Long destination URL" title="Full URL" aria-label="Full URL"></textarea>
+                        </div>
+                        <button class="btn btn-success" type="submit">Shorten</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
 
         <div class="pb-5">
             <h2>Existing URLs</h2>

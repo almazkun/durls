@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "durls",
     # others
     "environ",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [

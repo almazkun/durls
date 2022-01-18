@@ -1,8 +1,6 @@
-run:
-	sudo pipenv run python3 manage.py runserver 127.0.0.1:80
-
-run_d: 
-	docker-compose up --build
+dev:
+	docker build -t durls_image .
+	docker run --rm -p 80:80 --mount type=bind,source="$(shell pwd)",target=/usr/src/code --name durls durls_image python manage.py runserver 0.0.0.0:80
 
 test:
 	pipenv run coverage run manage.py test
