@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponsePermanentRedirect, Http404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from durls.seervices import destination_all, destination_for_user
 
 
 class HomeView(TemplateView):
@@ -11,7 +12,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["destinations"] = Destination.objects.all()
+        context["destinations"] = destination_all()
         return context
 
 
@@ -23,7 +24,7 @@ class DestinationCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["destinations"] = self.model.objects.all()
+        context["destinations"] = destination_for_user(self.request.user)
         return context
 
     def form_valid(self, form):

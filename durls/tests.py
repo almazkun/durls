@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from durls.models import Destination
 from accounts.models import CustomUser
+from durls.seervices import destination_all, destination_for_user
 
 # Create your tests here.
 class TestViews(TestCase):
@@ -91,3 +92,35 @@ class TestViews(TestCase):
         self.assertEqual(response.url, self.dest_data["destination_url"])
         self.assertEqual(dest.visits, 1)
         self.assertEqual(f"{dest}", self.dest_data["slug"])
+
+
+class TestServices(TestCase):
+    def setUp(self):
+        self.user_one = CustomUser.objects.create_user(email="some@email.com")
+        self.user_two = CustomUser.objects.create_user(email="some_other@email.com")
+        self.dest_one = Destination.objects.create(
+            owner=self.user_one, slug="one", destination_url="https://www.google.com"
+        )
+        self.dest_two = Destination.objects.create(
+            owner=self.user_two, slug="two", destination_url="https://www.google.co.kr"
+        )
+
+    def test_destination_all(self):
+        dest_all = destination_all()
+        self.assertEqual(dest_all.count(), Destination.objects.all().count())
+
+    def test_destination_for_user_one(self):
+        dest_for_user = destination_for_user(self.user_one)
+        self.assertEqual(
+            dest_for_user.count(),
+            Destination.objects.filter(owner=self.user_one).count(),
+        )
+        self.assertTrue(self.dest_one in dest_for_user)
+
+    def test_destination_for_user_two(self):
+        dest_for_user = destination_for_user(self.user_two)
+        self.assertEqual(
+            dest_for_user.count(),
+            Destination.objects.filter(owner=self.user_two).count(),
+        )
+        self.assertTrue(self.dest_two in dest_for_user)

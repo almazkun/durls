@@ -1,6 +1,5 @@
 dev:
-	docker build -t durls_image .
-	docker run --rm -p 80:80 --mount type=bind,source="$(shell pwd)",target=/usr/src/code --name durls durls_image python manage.py runserver 0.0.0.0:80
+	pipenv run python3 manage.py runserver
 
 test:
 	pipenv run coverage run manage.py test
@@ -19,3 +18,4 @@ demo:
 	git checkout demo
 	git pull origin main
 	git push
+	git checkout main

@@ -147,3 +147,7 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 
 # for LoginRequiredMixin to work
 LOGIN_URL = "login"
+
+LOGOUT_REDIRECT_URL = "home"
+
+LOGIN_REDIRECT_URL = "home"
