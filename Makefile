@@ -9,7 +9,7 @@ prod:
 	docker-compose -f docker-compose.prod.yml up -d --build 
 
 migrate:
-	docker-compose exec web python3 manage.py migrate
+	docker-compose exec -T web python3 manage.py migrate
 
 down:
 	docker-compose down -v
