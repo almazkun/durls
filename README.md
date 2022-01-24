@@ -23,6 +23,7 @@ git clone https://github.com/almazkun/durls.git
 cd durls
 docker-compose up -d --build
 docker-compose exec web python3 manage.py migrate
+docker-compose exec web python3 manage.py collectstatic --noinput
 
 # Open your browser and navigate to `127.0.0.1` or `localhost`
 ```
@@ -33,7 +34,8 @@ docker-compose exec web python3 manage.py migrate
     - Create a user and add a new redirect destination.
 
 ### TODO
-- Permission for admin to manage all destinations
-- Script to migrate and populate initial data to DB
 - Job to reset the DB
 - Social login
+- Restrict Login/Signup option
+- Create redirect command
+- API for creating redirects

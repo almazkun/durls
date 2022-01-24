@@ -6,8 +6,7 @@ test:
 	pipenv run coverage report -m
 
 prod:
-	docker-compose -f docker-compose.prod.yml up -d --build
-
+	docker-compose -f docker-compose.yml up -d --build
 
 migrate:
 	docker-compose exec -T web python3 manage.py migrate

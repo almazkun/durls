@@ -4,7 +4,7 @@ services:
     web:
         build: ./
         restart: on-failure:5 
-        command: python3 manage.py runserver 0.0.0.0:8000 
+        command: gunicorn settings.wsgi:application -w 3 --bind 0.0.0.0:8000 
         ports: 
           - 8000
         volumes: 
@@ -15,7 +15,7 @@ services:
         restart: always
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf
-            - ./static:/var/www/static
+            - ./staticfiles:/var/www/staticfiles
         ports:
             - 80:80
         depends_on:

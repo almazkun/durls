@@ -15,7 +15,9 @@ class Command(BaseCommand):
         destination_slug = "go"
 
         if not CustomUser.objects.filter(email=demo_admin_email).exists():
-            CustomUser.objects.create_superuser(email=demo_admin_email, password=password)
+            CustomUser.objects.create_superuser(
+                email=demo_admin_email, password=password
+            )
             self.stdout.write(f"Admin Created: {demo_admin_email}")
 
         if not CustomUser.objects.filter(email=demo_user_email).exists():
