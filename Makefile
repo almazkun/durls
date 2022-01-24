@@ -15,7 +15,7 @@ statics:
 	docker-compose exec -T web python3 manage.py collectstatic --noinput
 
 demo_setup:
-	docker-compose exec -T web python3 manage.py demo_data
+	docker-compose exec -T web python3 manage.py demo_setup
 
 down:
 	docker-compose down -v
