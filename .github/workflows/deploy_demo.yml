@@ -18,6 +18,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
+          mkdir -p ${{ secrets.DIRECTORY }}
           cd ${{ secrets.DIRECTORY }}
           git checkout demo
           git fetch origin demo
