@@ -27,3 +27,5 @@ jobs:
           git reset --hard origin/demo
           make prod
           make migrate
+          make statics
+          make demo_setup

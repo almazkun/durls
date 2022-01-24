@@ -1,7 +1,9 @@
-from django.test import TestCase, Client
-from django.urls import reverse
 from django.db.utils import IntegrityError
+from django.test import Client, TestCase
+from django.urls import reverse
+
 from accounts.models import CustomUser
+
 
 # Create your tests here.
 class TestModels(TestCase):
@@ -72,8 +74,8 @@ class TestViews(TestCase):
         user = CustomUser.objects.get(email=self.user_data["email"])
 
         self.assertEqual(user.email, self.user_data["email"])
+        self.assertEqual(response.status_code, 302)
         self.assertFalse(user.is_superuser)
         self.assertFalse(user.is_staff)
         self.assertTrue(user.is_active)
         self.assertTrue(user.check_password(self.user_data["password1"]))
-        self.assertEqual(response.status_code, 302)

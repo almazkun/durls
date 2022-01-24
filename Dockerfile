@@ -2,8 +2,6 @@ FROM python:buster
 
 WORKDIR /usr/src/code
 
-
-
 RUN apt-get update && apt-get -y upgrade
 
 ENV PYTHONDONTWRITEBYTECODE 1

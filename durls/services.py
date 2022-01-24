@@ -18,5 +18,9 @@ def destination_all():
 def destination_for_user(owner):
     """
     Returns a queryset of destinations for a user.
+    or
+    All for staff.
     """
+    if owner.is_staff:
+        return Destination.objects.all().select_related("owner")
     return Destination.objects.filter(owner=owner)
