@@ -16,12 +16,15 @@ import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Environment variables
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
 )
 environ.Env.read_env(BASE_DIR / ".env")
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -34,7 +37,7 @@ SECRET_KEY = env(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG", default=False)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
@@ -159,8 +162,8 @@ LOGIN_REDIRECT_URL = "home"
 
 
 # This for manage.py demo_setup to work
-DURLS_DEMO_PASSWORD = env("DURLS_DEMO_PASSWORD")
+DURLS_DEMO_PASSWORD = env("DURLS_DEMO_PASSWORD", default="insecure_password")
 
-DURLS_DEMO_ADMIN_EMAIL = env("DURLS_DEMO_ADMIN_EMAIL")
+DURLS_DEMO_ADMIN_EMAIL = env("DURLS_DEMO_ADMIN_EMAIL", default="admin@email.com")
 
-DURLS_DEMO_USER_EMAIL = env("DURLS_DEMO_USER_EMAIL")
+DURLS_DEMO_USER_EMAIL = env("DURLS_DEMO_USER_EMAIL", default="user@email.com")
