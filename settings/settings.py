@@ -37,11 +37,11 @@ SECRET_KEY = env(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG", default=False)
 
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS = (
     [x.strip() for x in os.environ.get("ALLOWED_HOSTS", "").split(",")]
     if os.environ.get("ALLOWED_HOSTS")
     else ["localhost"]
-]
+)
 
 CSRF_TRUSTED_ORIGINS = (
     [x.strip() for x in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")]
