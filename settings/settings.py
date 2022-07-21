@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 import environ
@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -100,6 +101,11 @@ DATABASES = {
     }
 }
 
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if DATABASE_URL:
+    import dj_database_url
+
+    DATABASES["default"] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -141,6 +147,9 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath("static"))]
 # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-STATIC_ROOT
 STATIC_ROOT = str(BASE_DIR.joinpath("staticfiles"))
 
+# https://whitenoise.evans.io/en/stable/
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -160,6 +169,12 @@ LOGOUT_REDIRECT_URL = "home"
 # for account.urls to work
 LOGIN_REDIRECT_URL = "home"
 
+
+CSRF_TRUSTED_ORIGINS = (
+    [x.strip() for x in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")]
+    if os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS")
+    else []
+)
 
 # This for manage.py demo_setup to work
 DURLS_DEMO_PASSWORD = env("DURLS_DEMO_PASSWORD", default="insecure_password")
