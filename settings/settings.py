@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 
 import environ
@@ -182,3 +183,8 @@ DURLS_DEMO_PASSWORD = env("DURLS_DEMO_PASSWORD", default="insecure_password")
 DURLS_DEMO_ADMIN_EMAIL = env("DURLS_DEMO_ADMIN_EMAIL", default="admin@email.com")
 
 DURLS_DEMO_USER_EMAIL = env("DURLS_DEMO_USER_EMAIL", default="user@email.com")
+
+if (
+    "test" in sys.argv or "test_coverage" in sys.argv
+):  # Covers regular testing and django-coverage
+    del STATICFILES_STORAGE
